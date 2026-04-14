@@ -7,6 +7,7 @@ on:
   push:
     tags:
       - "20*"
+      - "mosquitto-*"
     branches:
       - main
     paths:
