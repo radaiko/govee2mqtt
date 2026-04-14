@@ -1,5 +1,28 @@
 # Govee to MQTT bridge for Home Assistant
 
+> **⚠️ Fork notice — Mosquitto 7.x fix**
+>
+> This is a temporary fork of [wez/govee2mqtt](https://github.com/wez/govee2mqtt) that replaces
+> the `/` in the MQTT client ID with `-`. Mosquitto 7.0+ rejects the upstream client ID
+> (`govee2mqtt/<uuid>`) as a "dangerous client ID" due to stricter ACL rules, causing the
+> upstream addon to fail to connect. Use this fork as a drop-in replacement until
+> [the upstream repo](https://github.com/wez/govee2mqtt) ships a fix.
+>
+> ### How to switch (Home Assistant OS / Supervised)
+>
+> 1. **Uninstall** the upstream "Govee to MQTT Bridge" addon. Copy your config somewhere first
+>    (API key, email, password, MQTT settings) — you'll paste it back in step 4.
+> 2. **Add this fork as an addon repository:** Settings → Add-ons → Add-on Store →
+>    ⋮ (top-right) → Repositories → paste `https://github.com/radaiko/govee2mqtt` → Add.
+> 3. **Install** "Govee to MQTT Bridge" from the newly added *radaiko fork* source in the store.
+> 4. **Restore** your configuration and start the addon.
+> 5. Check the addon log — the MQTT client ID should now look like `govee2mqtt-<uuid>` (with
+>    a dash, not a slash) and Mosquitto should accept it.
+>
+> Once upstream merges the fix, remove this repository and reinstall the official addon.
+> See commit [`2520244`](https://github.com/radaiko/govee2mqtt/commit/2520244) for the
+> one-line change.
+
 This repo provides a `govee` executable whose primary purpose is to act
 as a bridge between [Govee](https://govee.com) devices and Home Assistant,
 via the [Home Assistant MQTT Integration](https://www.home-assistant.io/integrations/mqtt/).
